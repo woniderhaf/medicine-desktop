@@ -1,0 +1,55 @@
+#videoElement{
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+  -moz-transform:rotateY(180deg); /* Firefox */
+}
+.videoLocal{
+  width: 400px;
+  height: 400px;
+  position:absolute;
+  z-index: 1000;
+  top:100px;
+  right: 100px;
+}
+.videoRemote{
+  position:absolute;
+  top:0;
+  left:0;
+  right: 0;
+  bottom: 0;
+  width: 800px;
+  height: 700px;
+  object-fit:contain ;
+  z-index: 2;
+}
+.callOff{
+  /* style={[{height:60,width:60, backgroundColor:'red', borderRadius:50}, s.center]} */
+  height: 30px;
+  width: 30px;
+  padding: 10px;
+  background-color: red;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.settings{
+  /* background-color: blue; */
+  position: absolute;
+  /* bottom: 0px; */
+  right: 100px;
+  top:400px;
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
+  width: 400px;
+  height: 100px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+}
+.time{
+  position: absolute;
+  right: 100px;
+  top: 110px;
+}
