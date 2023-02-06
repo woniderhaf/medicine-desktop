@@ -89,6 +89,20 @@ const Room = props => {
               className={clientId === LOCAL_VIDEO ? 'videoLocal' :'videoRemote'}
               autoPlay
             />
+           {clientId !== LOCAL_VIDEO ? <div className='settings'>
+              <div
+                onClick={changeCameraFunc} 
+                // style={{height:50,width:50, flexDirection:'row', alignItems:'center', justifyContent:'center'}}
+              >
+                <img src={isCamera? camera : cameraOff}/>
+              </div>
+              <div  onClick={changeAudioFunc} >
+                <img src={isAudio ? audio : audioOff}/>
+              </div>
+              <div  onClick={callOff} >
+                <img src={callOffSvg} />
+              </div>
+            </div> :null} 
           </div>
         )
       })}
@@ -99,35 +113,30 @@ const Room = props => {
           <div className='patient_avatar'>
             <img  src={avatar} />
           </div>
+          <div className='settings'>
+            <div
+              onClick={changeCameraFunc} 
+              // style={{height:50,width:50, flexDirection:'row', alignItems:'center', justifyContent:'center'}}
+            >
+              <img src={isCamera? camera : cameraOff}/>
+            </div>
+
+            <div  onClick={changeAudioFunc} >
+              <img src={isAudio ? audio : audioOff}/>
+            </div>
+
+            <div  onClick={callOff} >
+              <img src={callOffSvg} />
+            </div>
+          </div>
         </div>
         : null
       }
-     {clients.length > 1 ? <div className='time'>
+     {/* {clients.length > 1 ? <div className='time'>
         <p>{redactorTimer(timer)}</p>
-      </div> : null}
+      </div> : null} */}
 
-      <div className='settings'>
-
-        {/* <div  onClick={cameraRotate} style={{height:50,width:50}}>
-          <img src={cameraRotateIco}/>
-        </div> */}
-
-        <div
-          onClick={changeCameraFunc} 
-          // style={{height:50,width:50, flexDirection:'row', alignItems:'center', justifyContent:'center'}}
-        >
-          <img src={isCamera? camera : cameraOff}/>
-        </div>
-
-        <div  onClick={changeAudioFunc} >
-          <img src={isAudio ? audio : audioOff}/>
-        </div>
-
-        <div  onClick={callOff} >
-          <img src={callOffSvg} />
-        </div>
-
-      </div>
+   
         {isCallEnd? <Navigate to={'/medicine-desktop'}/> : null}
     </div>
   )

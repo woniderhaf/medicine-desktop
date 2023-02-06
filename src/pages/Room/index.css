@@ -8,8 +8,8 @@
   height: 400px;
   position:absolute;
   z-index: 1000;
-  top:100px;
-  right: 100px;
+  bottom:0;
+  right: 20px;
 }
 .videoRemote{
   position:absolute;
@@ -18,17 +18,18 @@
   right: 0;
   bottom: 0;
   width: 800px;
-  height: 700px;
+  height: 100vh;
   object-fit:contain ;
   z-index: 2;
-  background-color: red;
+  background-color: #60B768;
 }
 .videoBlock{
   position:absolute;
   top:0;
-  left: 20%;
+  left:0;
+  right: 0;
   bottom: 0;
-  width: 400px;
+  width: 800px;
   height: 100vh;
   object-fit:contain ;
   z-index: 2;
@@ -48,11 +49,8 @@
 .settings{
   /* background-color: blue; */
   position: absolute;
-  /* bottom: 0px; */
-  right: 100px;
-  top:400px;
-  /* left: 50%; */
-  /* transform: translateX(-50%); */
+  bottom: 0px;
+  left: 200px;
   width: 400px;
   height: 100px;
   display: flex;
