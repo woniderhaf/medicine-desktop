@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/medicine-desktop/static/css/main.b3e757cd.css",
-    "main.js": "/medicine-desktop/static/js/main.1765c560.js",
+    "main.css": "/medicine-desktop/static/css/main.072198fa.css",
+    "main.js": "/medicine-desktop/static/js/main.0e14bac8.js",
     "static/media/Avatar.png": "/medicine-desktop/static/media/Avatar.c655fc1630ba8f412937.png",
     "static/media/audio.svg": "/medicine-desktop/static/media/audio.b25690a1a2016aae40707250f561f6fc.svg",
     "static/media/camera.svg": "/medicine-desktop/static/media/camera.139e8698ccbb34931678286e3d9bff8e.svg",
     "index.html": "/medicine-desktop/index.html",
     "static/media/Calling.svg": "/medicine-desktop/static/media/Calling.e3d19d4dca22dc5efc1c555305a4d3c2.svg",
-    "main.b3e757cd.css.map": "/medicine-desktop/static/css/main.b3e757cd.css.map",
-    "main.1765c560.js.map": "/medicine-desktop/static/js/main.1765c560.js.map"
+    "main.072198fa.css.map": "/medicine-desktop/static/css/main.072198fa.css.map",
+    "main.0e14bac8.js.map": "/medicine-desktop/static/js/main.0e14bac8.js.map"
   },
   "entrypoints": [
-    "static/css/main.b3e757cd.css",
-    "static/js/main.1765c560.js"
+    "static/css/main.072198fa.css",
+    "static/js/main.0e14bac8.js"
   ]
 }
