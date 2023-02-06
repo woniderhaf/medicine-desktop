@@ -11,11 +11,11 @@ const Modal = ({setIsModal,fio,setFio}) => {
   }
   const createRoom = () => {
     setIsCreating(true)
-    fetch('http://localhost:4444/createRoom', 
+    fetch('http://95.161.194.246:4444/createRoom', 
     { 
       method:'POST',
       body:JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json', 'Authorization':'eyJhbGciOiJIUzI1NiJ9.bWVkaWNpbmU.O_X9bVp1x9ZPgmvQ_fvEhmBcOi250rXiJzbXl9hO7RM'},
+      headers: { 'Content-Type': 'application/json', 'Authorization':'bearer eyJhbGciOiJIUzI1NiJ9.bWVkaWNpbmU.O_X9bVp1x9ZPgmvQ_fvEhmBcOi250rXiJzbXl9hO7RM'},
     }
     ).then(res => res.json()).then(res => {setData(res); setIsCreating(false)})
   }

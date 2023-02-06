@@ -3,7 +3,8 @@ import io from 'socket.io-client'
 
 // const socket = io('http://192.168.0.104:4444', {transports:['websocket'], });
 // const socketData = io('http://192.168.0.113:4444', {transports:['websocket'], });
-const socketData = io('http://localhost:4444', {transports:['websocket'], });
+// const socketData = io('http://localhost:4444', {transports:['websocket'], });
+const socketData = io('http://95.161.194.246:4444', {transports:['websocket'], });
 
 
 export const socket = createContext(socketData)
