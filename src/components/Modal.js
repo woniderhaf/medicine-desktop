@@ -37,7 +37,7 @@ const Modal = ({setIsModal,fio,setFio}) => {
             data 
             ?
               // <a className="btn" href={data.url}  target={'_blank'}>
-              <Link to={`/room/${data.roomId}`}>
+              <Link to={`room/${data.roomId}`}>
                 <button onClick={() => setIsModal(false)}>
                   <p className="text">перейти в комнату</p>
                 </button> 

@@ -118,7 +118,7 @@ const Room = props => {
         </div>
 
       </div>
-        {isCallEnd? <Navigate to={'/'}/> : null}
+        {isCallEnd? <Navigate to={'/medicine-desktop'}/> : null}
     </div>
   )
 }
