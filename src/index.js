@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import {createBrowserRouter,RouterProvider} from 'react-router-dom'
+import {createBrowserRouter,Link,Navigate,RouterProvider} from 'react-router-dom'
 import CreateRoom from './pages/CreateRoom/Index';
 import Room from './pages/Room/Index';
 
@@ -9,16 +9,21 @@ import Room from './pages/Room/Index';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
   {
-    path:'/',
+    path:'/medicine-desktop',
     element: <CreateRoom/>
   },
   {
-    path:'/room/:id',
+    path:'/medicine-desktop/room/:id',
     element: <Room/>
   },
   {
     path:'*',
-    element: <div><p>error page</p></div>
+    element: <div>
+      <p>error page</p>
+      <Link to={'/'}>
+      <p>home page</p>
+      </Link>
+    </div>
   }
 ])
 root.render(
