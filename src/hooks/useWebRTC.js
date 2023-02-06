@@ -1,5 +1,6 @@
 import {useEffect, useRef, useCallback, useState,useContext} from 'react';
 import freeice from 'freeice';
+import { useNavigate } from 'react-router-dom';
 import useStateWithCallback from './useStateWithCallback';
 import ACTIONS from '../socket/actions';
 import { socket as io } from '../socket/socket';
@@ -7,6 +8,7 @@ export const LOCAL_VIDEO = 'LOCAL_VIDEO';
 
 
 export default function useWebRTC(roomID) {
+  const navigate = useNavigate();
   const socket = useContext(io)
   const [clients, updateClients] = useStateWithCallback([]);
   const [startCall,setStartCall] = useState(null)
@@ -98,7 +100,7 @@ export default function useWebRTC(roomID) {
         }
       }
 
-      localMediaStream.current.getTracks().forEach(track => {
+      localMediaStream.current?.getTracks().forEach(track => {
         peerConnections.current[peerID].addTrack(track, localMediaStream.current);
       });
 
@@ -183,15 +185,17 @@ export default function useWebRTC(roomID) {
       const cameraDevices = devices.filter(device => device.kind === 'videoinput' ? device:false)
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         audio: true,
-        video: {
-          width: 1280,
-          height: 720,
-        }
-      });
-      if(cameraDevices.length < 1) {
+        video: false
+      }).catch(err => {console.log(err);});
+      // if(!mediaStream) {
+      //   alert('Подключите камеру и повторите попытку')
+      //   navigate('/')
+      // }
+      if(cameraDevices.length < 1 && mediaStream) {
         let videoTrack = await mediaStream.getVideoTracks()[ 0 ];
         videoTrack.enabled = false;
       }
+      console.log({mediaStream});
       localMediaStream.current = mediaStream
 
       addNewClient(LOCAL_VIDEO, () => {

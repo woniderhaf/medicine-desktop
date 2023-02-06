@@ -27,7 +27,7 @@ const CreateRoom = props => {
         <p>комнаты</p>
         <div>{rooms.map(v=> {
           return (
-            <a className="room" href={`/room/${v}`} target='_blank'>
+            <a key={v} className="room" href={`/room/${v}`} target='_blank'>
               <p>{v}</p>
             </a>   
           )

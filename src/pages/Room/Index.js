@@ -40,6 +40,13 @@ const Room = props => {
     }
   }, [clients])
 
+  useEffect(() => {
+    window.onbeforeunload = function(ev) {
+      ev.preventDefault()
+      return false;
+    };
+  }, [])
+
   const [isFrontCamera,setIsFrontCamera] = useState(true)
   const [isCamera,setIsCamera] = useState(true)
   const [isAudio,setIsAudio] = useState(true)
