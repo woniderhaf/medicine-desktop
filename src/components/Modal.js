@@ -21,6 +21,7 @@ const Modal = ({setIsModal,fio,setFio, date,setDate,time,setTime}) => {
     }
     ).then(res => res.json()).then(res => {setData(res); setIsCreating(false)})
   }
+  console.log({data});
   return (
     <div className="modal">
       <div className="modal_wrapper">

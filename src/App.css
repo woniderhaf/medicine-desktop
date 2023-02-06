@@ -32,3 +32,9 @@
 .close,.back,.create{
   cursor: pointer;
 }
+
+@media(max-width:400px) {
+  .modal_wrapper{
+    width: 80%;
+  }
+}
