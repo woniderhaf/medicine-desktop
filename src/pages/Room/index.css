@@ -21,6 +21,18 @@
   height: 700px;
   object-fit:contain ;
   z-index: 2;
+  background-color: red;
+}
+.videoBlock{
+  position:absolute;
+  top:0;
+  left: 20%;
+  bottom: 0;
+  width: 400px;
+  height: 100vh;
+  object-fit:contain ;
+  z-index: 2;
+  background-color: #60B768;
 }
 .callOff{
   /* style={[{height:60,width:60, backgroundColor:'red', borderRadius:50}, s.center]} */
@@ -52,4 +64,24 @@
   position: absolute;
   right: 100px;
   top: 110px;
+}
+
+.patient_name{
+  color: #FFF;
+  text-align: center;
+  margin-top: 140px;
+  font-size: 24px;
+  font-weight: 600;
+}
+.patient_avatar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+}
+.connection{
+  color: #FFF;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
 }

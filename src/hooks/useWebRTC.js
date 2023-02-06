@@ -185,7 +185,10 @@ export default function useWebRTC(roomID) {
       const cameraDevices = devices.filter(device => device.kind === 'videoinput' ? device:false)
       const mediaStream = await navigator.mediaDevices.getUserMedia({
         audio: true,
-        video: false
+        video: {
+          width:1280,
+          height:720
+        }
       }).catch(err => {console.log(err);});
       // if(!mediaStream) {
       //   alert('Подключите камеру и повторите попытку')

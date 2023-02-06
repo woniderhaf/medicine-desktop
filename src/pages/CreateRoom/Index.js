@@ -10,6 +10,8 @@ const CreateRoom = props => {
   const [rooms,setRooms] = useState([])
   const [isModal,setIsModal] = useState(false)
   const [fio,setFio] = useState('')
+  const [date,setDate] = useState('')
+  const [time,setTime] = useState('')
   const io = useContext(socket)
 
 
@@ -37,7 +39,7 @@ const CreateRoom = props => {
         <p className="text">Создать комнату</p>       
       </button>
       {isModal 
-        ? <Modal setIsModal={setIsModal} fio={fio} setFio={setFio}/>
+        ? <Modal setIsModal={setIsModal} fio={fio} setFio={setFio} date={date} setDate={setDate} time={time} setTime={setTime}/>
         : null
       }
     </div>

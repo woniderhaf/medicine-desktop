@@ -10,6 +10,7 @@ import cameraOff from '../../assets/cameraOff.png'
 import cameraRotateIco from '../../assets/cameraRotate.png'
 import { socket } from '../../socket/socket'
 import ACTIONS from '../../socket/actions'
+import avatar from '../../assets/Avatar.png'
 import callOffSvg from '../../assets/Calling.svg'
 const icons = {
   callOff: `<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="36" cy="36" r="36" fill="#EF4444"/><path fill-rule="evenodd" clip-rule="evenodd" d="M35.9957 35.0023C27.5347 35.0035 31.4684 40.8568 26.0824 40.8587C20.8888 40.8594 18.8759 41.832 18.8768 35.2517C18.9577 34.5083 17.5914 27.9044 35.9955 27.9018C54.4019 27.8992 53.0406 34.5036 53.1213 35.247C53.1215 41.8443 51.1089 40.8541 45.9153 40.8548C40.5282 40.8556 44.4566 35.0011 35.9957 35.0023Z" fill="white"/></svg>`,
@@ -87,11 +88,20 @@ const Room = props => {
               id='videoElement'
               className={clientId === LOCAL_VIDEO ? 'videoLocal' :'videoRemote'}
               autoPlay
-              
             />
           </div>
         )
       })}
+      {clients.length < 2 ? 
+        <div className='videoBlock'>
+          <p className='patient_name'>Азат Зайнутдинов</p>
+          <p className='connection'>Соединение...</p>
+          <div className='patient_avatar'>
+            <img  src={avatar} />
+          </div>
+        </div>
+        : null
+      }
      {clients.length > 1 ? <div className='time'>
         <p>{redactorTimer(timer)}</p>
       </div> : null}
