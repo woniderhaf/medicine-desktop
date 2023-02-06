@@ -9,7 +9,7 @@ const CreateRoom = props => {
 
   const [rooms,setRooms] = useState([])
   const [isModal,setIsModal] = useState(false)
-  const [fio,setFio] = useState('')
+  const [patient_name,setFio] = useState('')
   const [date,setDate] = useState('')
   const [time,setTime] = useState('')
   const io = useContext(socket)
@@ -25,21 +25,11 @@ const CreateRoom = props => {
 
   return (
     <div className="wrapper">
-      <div>
-        <p>комнаты</p>
-        <div>{rooms.map(v=> {
-          return (
-            <a key={v} className="room" href={`medicine-desktop/room/${v}`} target='_blank'>
-              <p>{v}</p>
-            </a>   
-          )
-        })}</div>
-      </div>
       <button onClick={() => {setIsModal(true)}}>
         <p className="text">Создать комнату</p>       
       </button>
       {isModal 
-        ? <Modal setIsModal={setIsModal} fio={fio} setFio={setFio} date={date} setDate={setDate} time={time} setTime={setTime}/>
+        ? <Modal setIsModal={setIsModal} patient_name={patient_name} setFio={setFio} date={date} setDate={setDate} time={time} setTime={setTime}/>
         : null
       }
     </div>

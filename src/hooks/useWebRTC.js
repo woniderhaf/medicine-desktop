@@ -11,8 +11,7 @@ export default function useWebRTC(roomID) {
   const navigate = useNavigate();
   const socket = useContext(io)
   const [clients, updateClients] = useStateWithCallback([]);
-  const [startCall,setStartCall] = useState(null)
-
+  const [roomData,setRoomData] = useState(null)
   const callEnd = async (room) => {
     socket.emit(ACTIONS.LEAVE, {room})
   }
@@ -69,7 +68,6 @@ export default function useWebRTC(roomID) {
             peerID,
             iceCandidate: event.candidate,
           });
-        setStartCall(new Date().getTime())
         }
       }
 
@@ -154,9 +152,11 @@ export default function useWebRTC(roomID) {
         new RTCIceCandidate(iceCandidate)
       );
     });
+    socket.on(ACTIONS.ROOM_DATA, res => {setRoomData(res)})
 
     return () => {
       socket.off(ACTIONS.ICE_CANDIDATE);
+      socket.off(ACTIONS.ROOM_DATA)
     }
   }, []);
 
@@ -234,7 +234,7 @@ export default function useWebRTC(roomID) {
     rotateCamera,
     changeAudio,
     changeCamera,
-    startCall,
+    roomData,
     provideMediaRef,
     callEnd
   };
