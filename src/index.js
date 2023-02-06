@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     path:'*',
     element: <div>
       <p>error page</p>
-      <Link to={'/'}>
+      <Link to={'/medicine-desktop'}>
       <p>home page</p>
       </Link>
     </div>
