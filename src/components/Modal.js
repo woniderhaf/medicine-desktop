@@ -10,12 +10,12 @@ const Modal = ({setIsModal,patient_name,setFio, date,setDate,time,setTime}) => {
     patient_name,
     date,
     time,
-    medmis_upload_files_url: 'https://node10.medmis.ru/wcrs/telemed_upload_files/5EF2E8C6-0D48-4633-A534-43339D38B7E2/D4PGXONWO0CEFGFXCGMRIWYF4P8GCJPK2ZHGZGJSUETW'
+    // medmis_upload_files_url: 'https://node10.medmis.ru/wcrs/telemed_upload_files/5EF2E8C6-0D48-4633-A534-43339D38B7E2/D4PGXONWO0CEFGFXCGMRIWYF4P8GCJPK2ZHGZGJSUETW'
   }
   const createRoom = () => {
     setIsCreating(true)
-    fetch('http://localhost:4444/createRoom', 
-    // fetch('https://testms.medmis.ru/createRoom', 
+    // fetch('http://localhost:4444/createRoom', 
+    fetch('https://testms.medmis.ru/createRoom', 
     { 
       method:'POST',
       body:JSON.stringify(body),
