@@ -59,6 +59,8 @@ const Room = props => {
   const [isCamera,setIsCamera] = useState(true)
   const [isAudio,setIsAudio] = useState(true)
   const [isCallEnd,setIsCallEnd] = useState(false)
+  const [loading,setLoading] = useState(false)
+  const [sendFile,setSendFile] = useState('wait') // wait || send || error
   const cameraRotate = () => {
     setIsFrontCamera(prevState => !prevState)
     rotateCamera()
@@ -71,7 +73,9 @@ const Room = props => {
     changeCamera(!isCamera)
     setIsCamera(prev => !prev)
   }
-
+  useEffect(() => {
+    console.log({roomData});
+  }, [roomData])
   const callOff = () => {
     callEnd(id)
     setTimeout(() => setIsCallEnd(true), 500)
@@ -103,10 +107,9 @@ const Room = props => {
     const name = file.name
     setFile({base64,name})
   }
-  const getFilesUrl = async () => {
-    const url = roomData.medmis_upload_files_url
-  }
+
   const fileSend = async () => {
+    setLoading(true)
     const key = file.name
     const value = file.base64
     const body  = {[key]:value}
@@ -117,7 +120,12 @@ const Room = props => {
       },
       body: new URLSearchParams(body)
     }
-    fetch(roomData.medmis_upload_files_url, options).then(res => res.json()).then(res => console.log(res))
+    try {
+      fetch(roomData.medmis_upload_files_url, options).then(res => setSendFile('send')).catch(res => setSendFile('error')).finally(() => {setLoading(false)})
+    } catch (error) {
+        setSendFile('error')
+        setLoading(false)
+    }
   }
   return (
     <>
@@ -194,33 +202,57 @@ const Room = props => {
       </div>
       {file ? 
         <div className='modal'>
-          <div className="modal_wrapper content_top max_content">
+          <div className={`modal_wrapper content_top ${fileSend === 'wait' ? 'max_content' : 'min_content'}`}>
             <div className="modal_top">
               <p>Прикрепление файла</p>
               <div className="close" onClick={() => setFile(null)}>&times;</div>
             </div>
-            <div className='fileBlock'>
-              <img src={imageSvg} className='svgPadding'/>
-              <div className='partition'/>
-              <p>{file.name}</p>
-            </div>
 
-            <div className='spaseBetween mt20'>
-
-              <label htmlFor='changeFile' className='fileBlock click '>
-                <img src={fileSvg} className='svgPadding'/>
+          {
+            sendFile === 'wait' ?
+            <>
+              <div className='fileBlock'>
+                <img src={imageSvg} className='svgPadding'/>
                 <div className='partition'/>
-                <p>Изменить</p>
-              </label>
-              <input id='changeFile' type={'file'} onChange={changeFile} className='file'/>
-
-              <div onClick={fileSend} className='fileBlock click'>
-                <p>Отправить</p>
-                <div className='partition'/>
-                <img src={fileSendSvg} className='fileSend'/>
+                <p>{file.name}</p>
               </div>
 
-            </div>
+              <div className='spaseBetween mt20'>
+
+                <label htmlFor='changeFile' className='fileBlock click '>
+                  <img src={fileSvg} className='svgPadding'/>
+                  <div className='partition'/>
+                  <p>Изменить</p>
+                </label>
+                <input id='changeFile' type={'file'} onChange={changeFile} className='file'/>
+
+                {loading ? 
+                  <div className='fileBlock click'>
+                    <p>Отправление...</p>
+                    <div className='partition'/>
+                    <img src={fileSendSvg} className='fileSend'/>
+                  </div>
+                  :
+                  <div onClick={fileSend}  className='fileBlock click'>
+                    <p>Отправить</p>
+                    <div className='partition'/>
+                    <img src={fileSendSvg} className='fileSend'/>
+                  </div>
+                }
+
+              </div>
+
+            </>
+            : sendFile === 'send' ?
+              <div className='fileBlock'>
+                  <p>Файл успешно прикреплен</p>
+              </div>
+            : 
+              <div className='fileBlock'>
+                <p>Ошибка прикрепления файла</p>
+              </div>
+          }
+
           </div>
         </div>
        : null

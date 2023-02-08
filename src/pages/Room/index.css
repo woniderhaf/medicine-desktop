@@ -13,7 +13,7 @@
   z-index: 1000;
   bottom:0;
   right: 20px;
-  background-color: gray;
+  /* background-color: gray; */
 }
 .videoRemote{
   position:absolute;
@@ -124,6 +124,9 @@
 }
 .max_content{
   height: 200px;
+}
+.min_content{
+  height: 110px;
 }
 .spaseBetween{
   display: flex;
