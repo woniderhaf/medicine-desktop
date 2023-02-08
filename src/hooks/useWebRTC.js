@@ -151,8 +151,8 @@ export default function useWebRTC(roomID) {
       peerConnections.current[peerID]?.addIceCandidate(
         new RTCIceCandidate(iceCandidate)
       );
-    });
-    socket.on(ACTIONS.ROOM_DATA, res => {setRoomData(res)})
+    })
+    socket.on(ACTIONS.ROOM_DATA, res => {setRoomData(res); console.log('room data',res);})
 
     return () => {
       socket.off(ACTIONS.ICE_CANDIDATE);

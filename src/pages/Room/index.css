@@ -13,6 +13,7 @@
   z-index: 1000;
   bottom:0;
   right: 20px;
+  background-color: gray;
 }
 .videoRemote{
   position:absolute;
@@ -85,6 +86,58 @@
   text-align: center;
   font-size: 16px;
   font-weight: 400;
+}
+.file{
+  display: none;
+}
+.fileLabel{
+  width: 52px;
+  height: 52px;
+  background-color: #fff;
+  border-radius: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fileBlock{
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  max-width: max-content;
+  height: 34px;
+  -webkit-box-shadow: -2px 4px 35px 12px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: -2px 4px 35px 12px rgba(34, 60, 80, 0.2);
+  box-shadow: -2px 4px 35px 12px rgba(34, 60, 80, 0.2);
+  border-radius: 8px;
+}
+.partition{
+  width: 1px;
+  height: 20px;
+  margin: 0 8px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.click {
+  cursor: pointer;
+}
+.mt20{
+  margin-top: 20px;
+}
+.max_content{
+  height: 200px;
+}
+.spaseBetween{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.fileSend{
+  background-color: #60B768;
+  border-radius: 10px;
+  padding: 5px;
+}
+.svgPadding{
+  padding: 0 5px;
 }
 
 @media(max-width:400px) {
