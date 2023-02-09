@@ -16,6 +16,7 @@ const CreateRoom = props => {
 
 
   useEffect(() => {
+    console.log('create Room page');
     io.on(ACTIONS.SHARE_ROOMS, ({rooms = []} = {}) => {
       setRooms(rooms)
     })

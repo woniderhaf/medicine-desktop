@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react'
 import {useParams,redirect, Navigate} from 'react-router-dom'
 import useWebRTC, { LOCAL_VIDEO } from '../../hooks/useWebRTC'
-import FileBase64 from 'react-file-base64'
 import './index.css'
+
 
 import audio from '../../assets/audio.svg'
 import audioOff from '../../assets/audioOff.png'
@@ -48,7 +48,7 @@ const Room = props => {
   }, [clients])
 
   useEffect(() => {
-    
+    console.log('room Page');
     window.onbeforeunload = function(ev) {
       ev.preventDefault()
       return false;
@@ -156,6 +156,7 @@ const Room = props => {
 
                 <div  onClick={callOff} >
                   <img src={callOffSvg} />
+                  {/* <SvgXml xml={icons.callOff}/> */}
                 </div>
 
               </div> :null} 
