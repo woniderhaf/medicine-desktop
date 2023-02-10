@@ -14,7 +14,7 @@ const Modal = ({setIsModal,patient_name,setFio, date,setDate,time,setTime}) => {
   }
   const createRoom = () => {
     setIsCreating(true)
-    // fetch('http://localhost:4444/createRoom', 
+    // fetch('http://192.168.0.114:4444/createRoom', 
     fetch('https://testms.medmis.ru/createRoom', 
     { 
       method:'POST',

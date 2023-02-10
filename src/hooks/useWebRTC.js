@@ -53,6 +53,9 @@ export default function useWebRTC(roomID) {
     [LOCAL_VIDEO]: null,
   });
   useEffect(() => {
+    socket.on(ACTIONS.CALL_END, () => {
+      console.log('CALL_END');
+    })
     async function handleNewPeer({peerID, createOffer}) {
       if (peerID in peerConnections.current) {
         return console.warn(`Already connected to peer ${peerID}`);
@@ -118,6 +121,8 @@ export default function useWebRTC(roomID) {
 
     return () => {
       socket.off(ACTIONS.ADD_PEER);
+      socket.off(ACTIONS.CALL_END);
+
     }
   }, []);
 

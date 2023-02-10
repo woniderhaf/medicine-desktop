@@ -48,7 +48,6 @@ const Room = props => {
   }, [clients])
 
   useEffect(() => {
-    console.log('room Page');
     window.onbeforeunload = function(ev) {
       ev.preventDefault()
       return false;
@@ -203,7 +202,7 @@ const Room = props => {
       </div>
       {file ? 
         <div className='modal'>
-          <div className={`modal_wrapper content_top ${fileSend === 'wait' ? 'max_content' : 'min_content'}`}>
+          <div className={`modal_wrapper content_top ${sendFile === 'wait' ? 'max_content' : 'min_content'}`}>
             <div className="modal_top">
               <p>Прикрепление файла</p>
               <div className="close" onClick={() => setFile(null)}>&times;</div>
