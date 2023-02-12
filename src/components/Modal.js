@@ -1,5 +1,6 @@
 import React, {useEffect,useState} from "react"
 import {Link} from 'react-router-dom'
+import constants from "../constants"
 import { v4 } from "uuid"
 import '../App.css'
 
@@ -12,10 +13,11 @@ const Modal = ({setIsModal,patient_name,setFio, date,setDate,time,setTime}) => {
     time,
     // medmis_upload_files_url: 'https://node10.medmis.ru/wcrs/telemed_upload_files/5EF2E8C6-0D48-4633-A534-43339D38B7E2/D4PGXONWO0CEFGFXCGMRIWYF4P8GCJPK2ZHGZGJSUETW'
   }
+  const {url} = constants
   const createRoom = () => {
     setIsCreating(true)
-    // fetch('http://192.168.0.114:4444/createRoom', 
-    fetch('https://testms.medmis.ru/createRoom', 
+    fetch(`${url}/createRoom`, 
+    // fetch('https://testms.medmis.ru/createRoom', 
     { 
       method:'POST',
       body:JSON.stringify(body),
@@ -34,10 +36,10 @@ const Modal = ({setIsModal,patient_name,setFio, date,setDate,time,setTime}) => {
           <>
             <label htmlFor="FIO">ФИО пациента</label>
             <input type="text" id="FIO"  value={patient_name} onChange={text => setFio(text.nativeEvent.target.value)}/>
-            <label htmlFor="date">Дата</label>
+            {/* <label htmlFor="date">Дата</label>
             <input type="date" id="date"   value={date} onChange={text => setDate(text.nativeEvent.target.value)}/>
             <label htmlFor="time">Время</label>
-            <input type={'time'} id="time" value={time} onChange={text => setTime(text.nativeEvent.target.value)}/>
+            <input type={'time'} id="time" value={time} onChange={text => setTime(text.nativeEvent.target.value)}/> */}
           </>
         }
         <div className="modal_main">
@@ -60,7 +62,7 @@ const Modal = ({setIsModal,patient_name,setFio, date,setDate,time,setTime}) => {
           <button className="back" onClick={() => {setIsModal(false); setDate(''); setFio(''); setTime('')}}>Отменить</button>
           { isCreating 
             ? <button disabled className="create">Создание...</button>
-            : !data ? <button disabled={!(patient_name && time && date)} onClick={createRoom} className="create">Создать</button> : null
+            : !data ? <button disabled={!(patient_name)} onClick={createRoom} className="create">Создать</button> : null
           }
         </div>
       </div>

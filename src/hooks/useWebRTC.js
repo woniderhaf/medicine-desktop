@@ -12,6 +12,8 @@ export default function useWebRTC(roomID) {
   const socket = useContext(io)
   const [clients, updateClients] = useStateWithCallback([]);
   const [roomData,setRoomData] = useState(null)
+  const [files,setFiles] = useState([])
+
   const callEnd = async (room) => {
     socket.emit(ACTIONS.LEAVE, {room})
   }
@@ -55,6 +57,9 @@ export default function useWebRTC(roomID) {
   useEffect(() => {
     socket.on(ACTIONS.CALL_END, () => {
       console.log('CALL_END');
+    })
+    socket.on(ACTIONS.SEND_FILE, data => {
+      setFiles(prevState => [data,...prevState])
     })
     async function handleNewPeer({peerID, createOffer}) {
       if (peerID in peerConnections.current) {
@@ -241,6 +246,7 @@ export default function useWebRTC(roomID) {
     changeCamera,
     roomData,
     provideMediaRef,
-    callEnd
+    callEnd,
+    files
   };
 }

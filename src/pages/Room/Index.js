@@ -8,13 +8,15 @@ import audio from '../../assets/audio.svg'
 import audioOff from '../../assets/audioOff.png'
 import camera from '../../assets/camera.svg'
 import cameraOff from '../../assets/cameraOff.png'
-import avatar from '../../assets/Avatar.png'
+import avatar from '../../assets/userAvatar.jpg'
 import fileSvg from '../../assets/file.svg'
+import clipSvg from '../../assets/clip.svg'
 import imageSvg from '../../assets/image.svg'
 import fileSendSvg from '../../assets/send.svg'
 import callOffSvg from '../../assets/Calling.svg'
 import { socket } from '../../socket/socket'
 import ACTIONS from '../../socket/actions'
+import constants from '../../constants'
 const icons = {
   callOff: `<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="36" cy="36" r="36" fill="#EF4444"/><path fill-rule="evenodd" clip-rule="evenodd" d="M35.9957 35.0023C27.5347 35.0035 31.4684 40.8568 26.0824 40.8587C20.8888 40.8594 18.8759 41.832 18.8768 35.2517C18.9577 34.5083 17.5914 27.9044 35.9955 27.9018C54.4019 27.8992 53.0406 34.5036 53.1213 35.247C53.1215 41.8443 51.1089 40.8541 45.9153 40.8548C40.5282 40.8556 44.4566 35.0011 35.9957 35.0023Z" fill="white"/></svg>`,
   camera: `<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="72" height="72" rx="36" fill="#4EA356"/><path fill-rule="evenodd" clip-rule="evenodd" d="M35.9999 41.6673V41.6673C32.8705 41.6673 30.3333 39.1301 30.3333 36.0007V27.5007C30.3333 24.3712 32.8705 21.834 35.9999 21.834V21.834C39.1293 21.834 41.6666 24.3712 41.6666 27.5007V36.0007C41.6666 39.1301 39.1293 41.6673 35.9999 41.6673Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M45.9166 34.584V35.859C45.9166 41.4137 41.4768 45.9173 35.9999 45.9173V45.9173C30.5231 45.9173 26.0833 41.4137 26.0833 35.859V34.584" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M35.2917 27.4993H36.7084" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M34.5833 31.7494H37.4166" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M35.2917 36.0423H36.7084" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M36.0001 45.916V50.166" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M31.75 50.1673H40.25" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
@@ -23,6 +25,7 @@ const icons = {
 }
 
 const Room = props => {
+
   const {id} = useParams()
   const [file,setFile] = useState(null)
   const {
@@ -32,9 +35,12 @@ const Room = props => {
     changeCamera,
     rotateCamera,
     callEnd,
-    roomData
+    roomData,
+    files
   } = useWebRTC(id)
+
   const [timer,setTimer] = useState(0)
+
   let timerRef = useRef(null)
   useEffect(() => {
     if(clients.length > 1) {
@@ -47,12 +53,23 @@ const Room = props => {
     }
   }, [clients])
 
+  const {url} = constants
+
   useEffect(() => {
+    getRooms()
     window.onbeforeunload = function(ev) {
       ev.preventDefault()
       return false;
     };
   }, [])
+
+  const getRooms = async () => {
+    const options = {
+      headers: { 'Content-Type': 'application/json', 'Authorization':'eyJhbGciOiJIUzI1NiJ9.bWVkaWNpbmU.O_X9bVp1x9ZPgmvQ_fvEhmBcOi250rXiJzbXl9hO7RM'},
+    }
+    const res = await fetch(`${url}/getRooms`, options).then(res => res.json())
+    console.log({res});
+  }
 
   const [isFrontCamera,setIsFrontCamera] = useState(true)
   const [isCamera,setIsCamera] = useState(true)
@@ -126,6 +143,20 @@ const Room = props => {
         setLoading(false)
     }
   }
+  const openFile = async (v) => {
+    const URL = window.URL || window.webkitURL
+    const byteChars = atob(v.base64)
+    let bytes = []
+    for (let i = 0; i < byteChars.length; i++)
+    bytes[i] = byteChars.charCodeAt(i);
+
+    const  blob = new Blob([new Uint8Array(bytes)], {type: v.type});
+    const downloadUrl = URL.createObjectURL(blob);
+    const newWin = window.open(downloadUrl, '_blank')
+    newWin.focus()
+    URL.revokeObjectURL(downloadUrl)
+
+  }
   return (
     <>
       <div>
@@ -137,6 +168,7 @@ const Room = props => {
                 muted={clientId===LOCAL_VIDEO}
                 id={clientId === LOCAL_VIDEO ? 'videoElement' : null}
                 className={clientId === LOCAL_VIDEO ? 'videoLocal' :'videoRemote'}
+                playsInline
                 autoPlay
               />
             {clientId !== LOCAL_VIDEO ? <div className='settings'>
@@ -167,7 +199,7 @@ const Room = props => {
             <p className='patient_name'>{roomData?.patient_name}</p>
             <p className='connection'>Соединение...</p>
             <div className='patient_avatar'>
-              <img  src={avatar} />
+              <img  src={avatar}  className='avatar'/>
             </div>
             <div className='settings'>
               <div
@@ -181,7 +213,7 @@ const Room = props => {
                 <img src={isAudio ? audio : audioOff}/>
               </div>
 
-              <label htmlFor="file" className='fileLabel'><img src={fileSvg}/></label>
+              <label htmlFor="file" className='fileLabel'><img src={clipSvg}/></label>
               <input id='file' type='file' className='file' onChange={changeFile} />
 
               <div  onClick={callOff} >
@@ -195,6 +227,21 @@ const Room = props => {
       {/* {clients.length > 1 ? <div className='time'>
           <p>{redactorTimer(timer)}</p>
         </div> : null} */}
+
+        {
+          files.length ? 
+          <div className='fileWrapper'>
+            {files.map((v,i) => 
+              <div key={i} className='filesBlock'>
+                <p>{v.name}</p>
+                <button onClick={() => openFile(v)}>
+                  посмотреть
+                </button>
+              </div>
+            )}
+          </div>
+          : null
+        }
 
     
           {isCallEnd? <Navigate to={'/medicine-desktop'}/> : null}

@@ -79,7 +79,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 50px;
+}
+.avatar{
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
 }
 .connection{
   color: #FFF;
@@ -141,6 +146,20 @@
 }
 .svgPadding{
   padding: 0 5px;
+}
+.filesBlock{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.fileWrapper{
+  position: absolute;
+  top: 0px;
+  right: 0;
+  width: 550px;
+  padding: 0 20px;
+  height: 300px;
 }
 
 @media(max-width:400px) {
