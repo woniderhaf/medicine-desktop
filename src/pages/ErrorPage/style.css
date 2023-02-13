@@ -1,0 +1,18 @@
+.wrapper{
+}
+.errorText404{
+  text-align: center;
+  font-size: 70px;
+  font-weight: 600;
+  color: #066abd;
+}
+.errorText{
+  font-size: 30px;
+  font-weight: 500;
+  color: #000;
+  text-align: center;
+}
+.lightText{
+  font-weight: 400;
+  font-size: 25px;
+}

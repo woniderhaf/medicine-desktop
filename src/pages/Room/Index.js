@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import {useParams,redirect, Navigate} from 'react-router-dom'
+import {useParams,redirect, Navigate, useNavigate} from 'react-router-dom'
 import useWebRTC, { LOCAL_VIDEO } from '../../hooks/useWebRTC'
 import './index.css'
 
@@ -27,6 +27,7 @@ const icons = {
 const Room = props => {
 
   const {id} = useParams()
+  const navigate = useNavigate()
   const [file,setFile] = useState(null)
   const {
     clients,
@@ -67,8 +68,11 @@ const Room = props => {
     const options = {
       headers: { 'Content-Type': 'application/json', 'Authorization':'eyJhbGciOiJIUzI1NiJ9.bWVkaWNpbmU.O_X9bVp1x9ZPgmvQ_fvEhmBcOi250rXiJzbXl9hO7RM'},
     }
-    const res = await fetch(`${url}/getRooms`, options).then(res => res.json())
-    console.log({res});
+    const rooms = await fetch(`${url}/getRooms`, options).then(res => res.json())
+    const isRoom = rooms.includes(id)
+    if(!isRoom) {
+      navigate('/notFound')
+    }
   }
 
   const [isFrontCamera,setIsFrontCamera] = useState(true)

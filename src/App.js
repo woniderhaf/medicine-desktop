@@ -3,6 +3,7 @@ import './App.css';
 import {createBrowserRouter,Link,Navigate,RouterProvider, BrowserRouter} from 'react-router-dom'
 import CreateRoom from './pages/CreateRoom/Index';
 import Room from './pages/Room/Index';
+import ErrorPage from './pages/ErrorPage/Index'
 function App() {
   const router = createBrowserRouter([
     {
@@ -12,6 +13,10 @@ function App() {
     {
       path:'/room/:id',
       element: <Room/>
+    },
+    {
+      path:'/notFound',
+      element: <ErrorPage/>
     },
     {
       path:'*',
