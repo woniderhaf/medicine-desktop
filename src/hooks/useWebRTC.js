@@ -56,7 +56,7 @@ export default function useWebRTC(roomID) {
   });
   useEffect(() => {
     socket.on(ACTIONS.CALL_END, () => {
-      console.log('CALL_END');
+      // console.log('CALL_END');
     })
     socket.on(ACTIONS.SEND_FILE, data => {
       setFiles(prevState => [data,...prevState])
@@ -208,7 +208,7 @@ export default function useWebRTC(roomID) {
         let videoTrack = await mediaStream.getVideoTracks()[ 0 ];
         videoTrack.enabled = false;
       }
-      console.log({mediaStream});
+      // console.log({mediaStream});
       localMediaStream.current = mediaStream
 
       addNewClient(LOCAL_VIDEO, () => {

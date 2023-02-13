@@ -64,8 +64,9 @@
 }
 .time{
   position: absolute;
-  right: 100px;
-  top: 110px;
+  right: 50%;
+  z-index: 100;
+  top: 10px;
 }
 
 .patient_name{
@@ -159,7 +160,10 @@
   right: 0;
   width: 550px;
   padding: 0 20px;
-  height: 300px;
+  height: 300px; 
+}
+.scroll{
+  overflow: scroll;
 }
 
 @media(max-width:400px) {
