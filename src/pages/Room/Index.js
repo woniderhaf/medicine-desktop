@@ -5,9 +5,7 @@ import './index.css'
 
 
 import audio from '../../assets/audio.svg'
-import audioOff from '../../assets/audioOff.png'
 import camera from '../../assets/camera.svg'
-import cameraOff from '../../assets/cameraOff.png'
 import avatar from '../../assets/userAvatar.jpg'
 import fileSvg from '../../assets/file.svg'
 import clipSvg from '../../assets/clip.svg'
@@ -27,7 +25,6 @@ const Room = props => {
     provideMediaRef, 
     changeAudio,
     changeCamera,
-    rotateCamera,
     callEnd,
     roomData,
     files
@@ -50,7 +47,7 @@ const Room = props => {
   const {url} = constants
 
   useEffect(() => {
-    // getRooms()
+    getRooms()
     window.onbeforeunload = function(ev) {
       ev.preventDefault()
       return false;
@@ -68,16 +65,14 @@ const Room = props => {
     }
   }
 
-  const [isFrontCamera,setIsFrontCamera] = useState(true)
   const [isCamera,setIsCamera] = useState(true)
   const [isAudio,setIsAudio] = useState(true)
   const [isCallEnd,setIsCallEnd] = useState(false)
   const [loading,setLoading] = useState(false)
   const [sendFile,setSendFile] = useState('wait') // wait || send || error
-  const cameraRotate = () => {
-    setIsFrontCamera(prevState => !prevState)
-    rotateCamera()
-  }
+  const [sendFilePatient,setSendFilePatient] = useState('wait') // wait || send || error || noSend
+
+
   const changeAudioFunc = () => {
     setIsAudio(prevState => !prevState)
     changeAudio()
@@ -89,9 +84,14 @@ const Room = props => {
   useEffect(() => {
     console.log({roomData});
   }, [roomData])
-  const callOff = () => {
-    callEnd(id)
-    setTimeout(() => setIsCallEnd(true), 500)
+
+  const callOff = (bool=true) => {
+    if(sendFilePatient !== 'send' && files.length && bool) {
+      setSendFilePatient('noSend')
+    } else {
+      callEnd(id)
+      setTimeout(() => {setIsCallEnd(true); window.close()}, 500)
+    }
   }
 
   const redactorTimer = time => {
@@ -174,14 +174,23 @@ const Room = props => {
     console.log(body);
     try {
       body.forEach(file => {
-        fetch(roomData?.medmis_upload_files_url, options(file)).then(res => setSendFile('send')).catch(res => setSendFile('error')).finally(() => {setLoading(false)})
+        fetch(roomData?.medmis_upload_files_url, options(file)).then(res => setSendFilePatient('send')).catch(res => setSendFilePatient('error')).finally(() => {setLoading(false)})
       })
     } catch (error) {
       console.log('error', error);
-        setSendFile('error')
+        setSendFilePatient('error')
         setLoading(false)
     }
   }
+
+  const sendFilesAndOffCall = async () => {
+    sendFilesPatient()
+    setTimeout(() => {
+      callOff(false)
+    }, 500)
+  }
+
+
   return (
     <>
       <div>
@@ -201,10 +210,10 @@ const Room = props => {
                   onClick={changeCameraFunc} 
                   // style={{height:50,width:50, flexDirection:'row', alignItems:'center', justifyContent:'center'}}
                 >
-                  <img src={isCamera? camera : cameraOff}/>
+                  <img src={camera} className={isCamera ? '' : 'lightOpacity'}/>
                 </div>
                 <div  onClick={changeAudioFunc} >
-                  <img src={isAudio ? audio : audioOff}/>
+                  <img src={audio} className={isAudio ? '' : 'lightOpacity'}/>
                 </div>
 
                 <label htmlFor="file" className='fileLabel'><img src={clipSvg}/></label>
@@ -227,15 +236,12 @@ const Room = props => {
               <img  src={avatar}  className='avatar'/>
             </div>
             <div className='settings'>
-              <div
-                onClick={changeCameraFunc} 
-                // style={{height:50,width:50, flexDirection:'row', alignItems:'center', justifyContent:'center'}}
-              >
-                <img src={isCamera? camera : cameraOff}/>
+              <div onClick={changeCameraFunc}>
+                <img src={camera} className={isCamera ? '' : 'lightOpacity'}/>
               </div>
 
               <div  onClick={changeAudioFunc} >
-                <img src={isAudio ? audio : audioOff}/>
+                <img src={audio} className={isAudio ? '' : 'lightOpacity'}/>
               </div>
 
               <label htmlFor="file" className='fileLabel'><img src={clipSvg}/></label>
@@ -332,6 +338,20 @@ const Room = props => {
           </div>
         </div>
        : null
+      }
+
+      {sendFilePatient == 'noSend' ? 
+        <div className='modal'>
+          <div className="modal_wrapper min_content widthMax z200">
+            <p>перед завершением хотите сохранить файлы пациента в ЭМК ?</p>
+            <div className='filesBlock'>
+              <button onClick={() => callOff(false)}>Нет</button>
+              <button onClick={sendFilesAndOffCall}>Да</button>
+            </div>
+          </div>
+
+        </div>
+        : null
       }
     </>
 

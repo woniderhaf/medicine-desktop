@@ -154,6 +154,9 @@
   justify-content: space-between;
   align-items: center;
 }
+.z200{
+  z-index: 200;
+}
 .fileWrapper{
   position: absolute;
   top: 0px;
@@ -164,6 +167,13 @@
 }
 .scroll{
   overflow: scroll;
+}
+
+.lightOpacity{
+  opacity: 0.5;
+}
+.widthMax{
+  width: max-content
 }
 
 @media(max-width:400px) {
